@@ -5,6 +5,8 @@ import RecurrenceCounter from './RecurrenceCounter'
 import PhaseIndicator from './PhaseIndicator'
 import TreatmentControls from './TreatmentControls'
 import TimeControls from './TimeControls'
+import EventLog from './EventLog'
+import GameSummary from './GameSummary'
 
 export default function PatientDashboard() {
   const { state } = useSimulation()
@@ -38,7 +40,15 @@ export default function PatientDashboard() {
         </div>
 
         {/* Treatment Controls */}
-        <TreatmentControls />
+        <div className="mb-6">
+          <TreatmentControls />
+        </div>
+
+        {/* Event Log */}
+        <EventLog />
+
+        {/* Game Summary Modal */}
+        <GameSummary />
       </div>
     </div>
   )
