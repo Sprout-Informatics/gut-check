@@ -1,11 +1,12 @@
 import { SimulationProvider, useSimulation } from './state/SimulationContext'
+import PopulationChart from './components/PopulationChart'
 
 function SimulationDebug() {
   const { state, dispatch } = useSimulation()
   const sim = state.simulation
 
   return (
-    <div className="min-h-screen bg-white p-8 max-w-2xl mx-auto">
+    <div className="min-h-screen bg-white p-8 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold text-gray-900">Gut Check</h1>
       <p className="text-gray-600 mb-6">The Microbiome Game</p>
 
@@ -34,6 +35,10 @@ function SimulationDebug() {
           <span className="text-gray-500">C. diff Spores</span>
           <p className="text-xl font-bold">{sim.cdiff.spores.toFixed(4)}</p>
         </div>
+      </div>
+
+      <div className="mb-6">
+        <PopulationChart />
       </div>
 
       <div className="flex gap-2 flex-wrap">
