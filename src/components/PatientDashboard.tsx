@@ -7,6 +7,7 @@ import TreatmentControls from './TreatmentControls'
 import TimeControls from './TimeControls'
 import EventLog from './EventLog'
 import GameSummary from './GameSummary'
+import ParameterSliders from './ParameterSliders'
 
 export default function PatientDashboard() {
   const { state } = useSimulation()
@@ -45,7 +46,12 @@ export default function PatientDashboard() {
         </div>
 
         {/* Event Log */}
-        <EventLog />
+        <div className="mb-6">
+          <EventLog />
+        </div>
+
+        {/* Advanced Settings */}
+        <ParameterSliders />
 
         {/* Game Summary Modal */}
         <GameSummary />
