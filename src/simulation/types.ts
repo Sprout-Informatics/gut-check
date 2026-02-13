@@ -26,8 +26,8 @@ export type SimulationPhase =
 export interface HistoryEntry {
   tick: number
   totalCommensalAbundance: number
-  cdiffVegetative: number
-  cdiffSpores: number
+  cdiffAbundance: number
+  toxinLevel: number
   diversityIndex: number
   healthScore: number
 }

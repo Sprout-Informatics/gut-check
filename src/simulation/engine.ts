@@ -18,8 +18,8 @@ function makeHistoryEntry(state: SimulationState): HistoryEntry {
   return {
     tick: state.tick,
     totalCommensalAbundance: state.totalCommensalAbundance,
-    cdiffVegetative: state.cdiff.vegetative,
-    cdiffSpores: state.cdiff.spores,
+    cdiffAbundance: state.cdiff.spores + state.cdiff.vegetative,
+    toxinLevel: state.cdiff.toxinLevel,
     diversityIndex: state.diversityIndex,
     healthScore: state.healthScore,
   }
@@ -36,11 +36,11 @@ export function determinePhase(state: SimulationState): SimulationPhase {
 }
 
 export function checkOutcome(state: SimulationState): SimulationOutcome | null {
-  // Durable cure: C. diff vegetative below 0.05 for DURABLE_CURE_TICKS consecutive ticks
+  // Durable cure: C. diff abundance below threshold for DURABLE_CURE_TICKS consecutive ticks
   // AND commensals above 0.5
   if (state.history.length >= DEFAULTS.DURABLE_CURE_TICKS) {
     const recentHistory = state.history.slice(-DEFAULTS.DURABLE_CURE_TICKS)
-    const allLow = recentHistory.every((h) => h.cdiffVegetative < 0.05)
+    const allLow = recentHistory.every((h) => h.cdiffAbundance < 0.08)
     const commensalsHealthy = state.totalCommensalAbundance > 0.5
     if (allLow && commensalsHealthy && state.antibioticCoursesGiven > 0) {
       return 'durable_cure'

@@ -35,7 +35,7 @@ function makeDepleted(seed = 42): SimulationState {
 }
 
 describe('applyNaturalRegrowthTick', () => {
-  it('from depleted state, after 30 ticks total abundance is still very low', () => {
+  it('from depleted state, natural rebound starts within days and recovers significantly by 30 ticks', () => {
     let state = makeDepleted()
     for (let i = 0; i < 30; i++) {
       const rng = createRNG(state.rngSeed + i)
@@ -47,16 +47,19 @@ describe('applyNaturalRegrowthTick', () => {
       }
     }
     const total = state.commensals.reduce((sum, s) => sum + s.abundance, 0)
-    expect(total).toBeLessThan(0.2)
+    // With faster kinetics, significant recovery after 30 days
+    expect(total).toBeGreaterThan(0.2)
+    // But not yet at full capacity
+    expect(total).toBeLessThan(0.95)
   })
 
-  it('nearly-extinct species mostly stay near zero', () => {
+  it('nearly-extinct species begin recovering stochastically', () => {
     const state = makeDepleted()
     const rng = createRNG(100)
     const result = applyNaturalRegrowthTick(state, rng)
-    // Most species should still be < 0.01 (only ~2% chance of revival per tick)
+    // With 20% chance per tick, some species start recovering each day
     const stillExtinct = result.commensals.filter((s) => s.abundance < 0.01)
-    expect(stillExtinct.length).toBeGreaterThan(6) // Most should still be extinct
+    expect(stillExtinct.length).toBeGreaterThan(3) // Some still extinct after 1 tick
   })
 
   it('living species grow logistically', () => {
