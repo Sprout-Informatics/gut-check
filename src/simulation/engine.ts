@@ -27,7 +27,7 @@ function makeHistoryEntry(state: SimulationState): HistoryEntry {
 
 export function determinePhase(state: SimulationState): SimulationPhase {
   if (state.outcome === 'durable_cure') return 'resolved'
-  if (state.outcome === 'chronic_cdiff') return 'chronic_infection'
+  if (state.outcome === 'chronic_cdiff' || state.outcome === 'patient_death') return 'chronic_infection'
   if (state.therapeuticApplied && state.totalCommensalAbundance > 0.5) return 'microbiome_therapeutic'
   if (state.antibioticActive && state.antibioticCoursesGiven > 1) return 'antibiotic_trap'
   if (state.cdiff.vegetative > DEFAULTS.RECURRENCE_THRESHOLD) return 'cdiff_bloom'
@@ -45,6 +45,11 @@ export function checkOutcome(state: SimulationState): SimulationOutcome | null {
     if (allLow && commensalsHealthy && state.antibioticCoursesGiven > 0) {
       return 'durable_cure'
     }
+  }
+
+  // Patient death: health reached 0
+  if (state.healthScore <= 0) {
+    return 'patient_death'
   }
 
   // Chronic infection: exceeded max ticks
@@ -123,6 +128,12 @@ export function tick(state: SimulationState, rng: RNG): SimulationState {
         tick: newState.tick,
         type: 'success',
         message: 'Durable cure achieved! The microbiome has been restored.',
+      })
+    } else if (outcome === 'patient_death') {
+      outcomeEvents.push({
+        tick: newState.tick,
+        type: 'critical',
+        message: 'The patient has died from overwhelming C. difficile toxin damage.',
       })
     } else if (outcome === 'chronic_cdiff') {
       outcomeEvents.push({

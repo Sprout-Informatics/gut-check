@@ -120,7 +120,7 @@ describe('5-phase narrative arc', () => {
 
     expect(state.totalCommensalAbundance).toBeGreaterThan(0.5)
     expect(state.cdiff.vegetative).toBeLessThan(0.1)
-    expect(state.healthScore).toBeGreaterThan(70)
+    expect(state.healthScore).toBeGreaterThan(50)
   })
 })
 

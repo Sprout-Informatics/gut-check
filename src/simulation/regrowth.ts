@@ -68,6 +68,15 @@ export function applyTherapeuticIntervention(state: SimulationState, rng: RNG): 
     boosted++
   }
 
+  // Clamp total abundance to carrying capacity
+  const total = newCommensals.reduce((sum, s) => sum + s.abundance, 0)
+  if (total > DEFAULTS.COMMENSAL_TOTAL_CAPACITY) {
+    const scale = DEFAULTS.COMMENSAL_TOTAL_CAPACITY / total
+    for (const species of newCommensals) {
+      species.abundance *= scale
+    }
+  }
+
   const newEvents = [
     ...state.events,
     {
