@@ -42,9 +42,14 @@ export function updateCDiff(state: SimulationState, rng: RNG): CDiffState {
   }
 
   // 4. Colonization resistance: healthy commensals actively displace C. diff
+  //    and produce secondary bile acids that clear spores
   if (totalCommensal > DEFAULTS.COMPETITIVE_EXCLUSION_THRESHOLD) {
-    const displacementRate = 0.08 * (totalCommensal - DEFAULTS.COMPETITIVE_EXCLUSION_THRESHOLD)
+    const excess = totalCommensal - DEFAULTS.COMPETITIVE_EXCLUSION_THRESHOLD
+    const displacementRate = 0.25 * excess
     vegetative *= (1 - displacementRate)
+    // Secondary bile acids from commensals inhibit and clear spores
+    const sporeClearanceRate = 0.06 * excess
+    spores *= (1 - sporeClearanceRate)
   }
 
   // 5. Sporulation (vegetative -> spores)
