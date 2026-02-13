@@ -45,6 +45,7 @@ export default function PopulationChart() {
             />
             <YAxis
               domain={[0, 100]}
+              allowDataOverflow={true}
               label={{ value: 'Abundance', angle: -90, position: 'insideLeft', offset: 10 }}
               tick={{ fontSize: 12 }}
             />
@@ -87,7 +88,16 @@ export default function PopulationChart() {
               tick={{ fontSize: 12 }}
             />
             <YAxis
+              yAxisId="health"
               domain={[0, 100]}
+              label={{ value: 'Health', angle: -90, position: 'insideLeft', offset: 10 }}
+              tick={{ fontSize: 12 }}
+            />
+            <YAxis
+              yAxisId="toxin"
+              orientation="right"
+              domain={[0, 'auto']}
+              label={{ value: 'Toxin', angle: 90, position: 'insideRight', offset: 10 }}
               tick={{ fontSize: 12 }}
             />
             <Tooltip
@@ -97,6 +107,7 @@ export default function PopulationChart() {
             <Legend />
 
             <Line
+              yAxisId="health"
               type="monotone"
               dataKey="healthScore"
               name="Health"
@@ -105,6 +116,7 @@ export default function PopulationChart() {
               strokeWidth={2}
             />
             <Line
+              yAxisId="toxin"
               type="monotone"
               dataKey="toxinLevel"
               name="Toxin"
