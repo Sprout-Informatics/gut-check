@@ -9,9 +9,9 @@ export function applyNaturalRegrowthTick(state: SimulationState, rng: RNG): Simu
     let { abundance } = species
 
     if (abundance < 0.001) {
-      // Nearly extinct: only a 2% chance per tick to begin recovering
-      if (rng.next() < 0.02) {
-        abundance = 0.005
+      // Nearly extinct: 20% chance per tick to begin recovering
+      if (rng.next() < 0.20) {
+        abundance = 0.02
       }
       return { ...species, abundance }
     }
@@ -66,6 +66,15 @@ export function applyTherapeuticIntervention(state: SimulationState, rng: RNG): 
     newCommensals.push(newSpecies)
     therapeuticNum++
     boosted++
+  }
+
+  // Clamp total abundance to carrying capacity
+  const total = newCommensals.reduce((sum, s) => sum + s.abundance, 0)
+  if (total > DEFAULTS.COMMENSAL_TOTAL_CAPACITY) {
+    const scale = DEFAULTS.COMMENSAL_TOTAL_CAPACITY / total
+    for (const species of newCommensals) {
+      species.abundance *= scale
+    }
   }
 
   const newEvents = [

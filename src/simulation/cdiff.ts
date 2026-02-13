@@ -11,7 +11,7 @@ function clamp(value: number, min: number, max: number): number {
 }
 
 export function updateCDiff(state: SimulationState, rng: RNG): CDiffState {
-  let { spores, vegetative } = state.cdiff
+  let { spores, vegetative, toxinLevel: prevToxin } = state.cdiff
   const totalCommensal = state.totalCommensalAbundance
 
   // 1. Competitive exclusion factor
@@ -19,11 +19,13 @@ export function updateCDiff(state: SimulationState, rng: RNG): CDiffState {
   const exclusionFactor = clamp(1 - exclusionRatio * DEFAULTS.COMPETITIVE_EXCLUSION_STRENGTH, 0, 1)
 
   // 2. Germination (spores -> vegetative)
+  // Spores stay dormant during antibiotic treatment (hostile environment)
+  const antibioticSuppression = state.antibioticActive ? 0.05 : 1.0
   const germinationRate = lerp(
     DEFAULTS.CDIFF_SPORE_GERMINATION_BASE,
     DEFAULTS.CDIFF_SPORE_GERMINATION_EMPTY,
     exclusionFactor,
-  ) * (1 + rng.gaussian(0, 0.05))
+  ) * antibioticSuppression * (1 + rng.gaussian(0, 0.05))
   const clampedGerminationRate = Math.max(0, germinationRate)
   const germinating = spores * clampedGerminationRate
   spores -= germinating
@@ -39,13 +41,25 @@ export function updateCDiff(state: SimulationState, rng: RNG): CDiffState {
     vegetative += Math.max(0, growth)
   }
 
-  // 4. Sporulation (vegetative -> spores)
+  // 4. Colonization resistance: healthy commensals actively displace C. diff
+  //    and produce secondary bile acids that clear spores
+  if (totalCommensal > DEFAULTS.COMPETITIVE_EXCLUSION_THRESHOLD) {
+    const excess = totalCommensal - DEFAULTS.COMPETITIVE_EXCLUSION_THRESHOLD
+    const displacementRate = 0.25 * excess
+    vegetative *= (1 - displacementRate)
+    // Secondary bile acids from commensals inhibit and clear spores
+    const sporeClearanceRate = 0.06 * excess
+    spores *= (1 - sporeClearanceRate)
+  }
+
+  // 5. Sporulation (vegetative -> spores)
   const sporulating = vegetative * DEFAULTS.CDIFF_SPORULATION_RATE
   vegetative -= sporulating
   spores += sporulating
 
-  // 5. Toxin production
-  const toxinLevel = vegetative * DEFAULTS.CDIFF_TOXIN_PRODUCTION_RATE
+  // 6. Toxin production — accumulation/decay model so toxin trails the bloom
+  const toxinLevel = prevToxin * (1 - DEFAULTS.CDIFF_TOXIN_DECAY_RATE)
+    + vegetative * DEFAULTS.CDIFF_TOXIN_PRODUCTION_RATE
 
   // Clamp all values
   spores = Math.max(0, spores)
@@ -54,7 +68,7 @@ export function updateCDiff(state: SimulationState, rng: RNG): CDiffState {
   return {
     spores,
     vegetative,
-    toxinLevel: Math.max(0, toxinLevel),
+    toxinLevel: Math.min(1, Math.max(0, toxinLevel)),
     germinationRate: clampedGerminationRate,
   }
 }

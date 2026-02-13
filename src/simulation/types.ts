@@ -26,8 +26,8 @@ export type SimulationPhase =
 export interface HistoryEntry {
   tick: number
   totalCommensalAbundance: number
-  cdiffVegetative: number
-  cdiffSpores: number
+  cdiffAbundance: number
+  toxinLevel: number
   diversityIndex: number
   healthScore: number
 }
@@ -43,7 +43,7 @@ export type PlayerAction =
   | { type: 'ADMINISTER_THERAPEUTIC'; dose?: number }
   | { type: 'WAIT_AND_MONITOR' }
 
-export type SimulationOutcome = 'durable_cure' | 'chronic_cdiff' | 'in_progress'
+export type SimulationOutcome = 'durable_cure' | 'chronic_cdiff' | 'patient_death' | 'in_progress'
 
 export interface SimulationState {
   tick: number
