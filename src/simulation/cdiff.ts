@@ -10,9 +10,23 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
 }
 
+/** Derive effective growth rate from virulence (1-10) */
+export function virulenceGrowthRate(virulence: number): number {
+  const t = (virulence - 1) / 9
+  return lerp(DEFAULTS.CDIFF_GROWTH_RATE_MIN, DEFAULTS.CDIFF_GROWTH_RATE_MAX, t)
+}
+
+/** Derive effective toxin production rate from virulence (1-10) */
+export function virulenceToxinRate(virulence: number): number {
+  const t = (virulence - 1) / 9
+  return lerp(DEFAULTS.CDIFF_TOXIN_RATE_MIN, DEFAULTS.CDIFF_TOXIN_RATE_MAX, t)
+}
+
 export function updateCDiff(state: SimulationState, rng: RNG): CDiffState {
   let { spores, vegetative, toxinLevel: prevToxin } = state.cdiff
   const totalCommensal = state.totalCommensalAbundance
+  const growthRate = virulenceGrowthRate(state.cdiffVirulence)
+  const toxinRate = virulenceToxinRate(state.cdiffVirulence)
 
   // 1. Competitive exclusion factor
   const exclusionRatio = clamp(totalCommensal / DEFAULTS.COMPETITIVE_EXCLUSION_THRESHOLD, 0, 1)
@@ -31,10 +45,11 @@ export function updateCDiff(state: SimulationState, rng: RNG): CDiffState {
   spores -= germinating
   vegetative += germinating
 
-  // 3. Vegetative growth (logistic, into available capacity)
-  const available = DEFAULTS.COMMENSAL_TOTAL_CAPACITY - totalCommensal - vegetative
+  // 3. Vegetative growth (logistic, into available shared capacity)
+  const totalCdiff = spores + vegetative
+  const available = DEFAULTS.COMMENSAL_TOTAL_CAPACITY - totalCommensal - totalCdiff
   if (available > 0) {
-    const growth = DEFAULTS.CDIFF_VEGETATIVE_GROWTH_RATE
+    const growth = growthRate
       * vegetative
       * (available / DEFAULTS.COMMENSAL_TOTAL_CAPACITY)
       * (1 + rng.gaussian(0, 0.03))
@@ -59,7 +74,7 @@ export function updateCDiff(state: SimulationState, rng: RNG): CDiffState {
 
   // 6. Toxin production — accumulation/decay model so toxin trails the bloom
   const toxinLevel = prevToxin * (1 - DEFAULTS.CDIFF_TOXIN_DECAY_RATE)
-    + vegetative * DEFAULTS.CDIFF_TOXIN_PRODUCTION_RATE
+    + vegetative * toxinRate
 
   // Clamp all values
   spores = Math.max(0, spores)

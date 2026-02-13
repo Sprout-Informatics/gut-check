@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { createRNG } from '../../src/simulation/random'
-import { updateCDiff, lerp } from '../../src/simulation/cdiff'
+import { updateCDiff, lerp, virulenceGrowthRate, virulenceToxinRate } from '../../src/simulation/cdiff'
 import { generateInitialProfile, generateInitialCDiffState } from '../../src/simulation/profiles'
 import type { SimulationState } from '../../src/simulation/types'
 import { DEFAULTS } from '../../src/simulation/constants'
@@ -22,6 +22,8 @@ function makeState(overrides: Partial<SimulationState> = {}): SimulationState {
     antibioticCoursesGiven: 0,
     therapeuticApplied: false,
     recurrenceCount: 0,
+    cdiffVirulence: DEFAULTS.CDIFF_DEFAULT_VIRULENCE,
+    cumulativeHealth: 0,
     history: [],
     events: [],
     rngSeed: 42,
@@ -97,5 +99,35 @@ describe('updateCDiff', () => {
       expect(result.vegetative).toBeGreaterThanOrEqual(0)
       expect(result.toxinLevel).toBeGreaterThanOrEqual(0)
     }
+  })
+})
+
+describe('virulence mapping', () => {
+  it('virulence 1 produces minimum growth and toxin rates', () => {
+    expect(virulenceGrowthRate(1)).toBeCloseTo(DEFAULTS.CDIFF_GROWTH_RATE_MIN)
+    expect(virulenceToxinRate(1)).toBeCloseTo(DEFAULTS.CDIFF_TOXIN_RATE_MIN)
+  })
+
+  it('virulence 10 produces maximum growth and toxin rates', () => {
+    expect(virulenceGrowthRate(10)).toBeCloseTo(DEFAULTS.CDIFF_GROWTH_RATE_MAX)
+    expect(virulenceToxinRate(10)).toBeCloseTo(DEFAULTS.CDIFF_TOXIN_RATE_MAX)
+  })
+
+  it('higher virulence produces more toxin per tick', () => {
+    const lowVirState = makeState({
+      totalCommensalAbundance: 0,
+      cdiffVirulence: 2,
+      cdiff: { spores: 0.01, vegetative: 0.3, toxinLevel: 0, germinationRate: 0.01 },
+    })
+    const highVirState = makeState({
+      totalCommensalAbundance: 0,
+      cdiffVirulence: 9,
+      cdiff: { spores: 0.01, vegetative: 0.3, toxinLevel: 0, germinationRate: 0.01 },
+    })
+    const rng1 = createRNG(100)
+    const rng2 = createRNG(100)
+    const lowResult = updateCDiff(lowVirState, rng1)
+    const highResult = updateCDiff(highVirState, rng2)
+    expect(highResult.toxinLevel).toBeGreaterThan(lowResult.toxinLevel)
   })
 })

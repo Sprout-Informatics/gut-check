@@ -8,14 +8,20 @@ export const DEFAULTS = {
   // C. diff parameters
   INITIAL_CDIFF_SPORES: 0.05,
   INITIAL_CDIFF_VEGETATIVE: 0.0,
-  CDIFF_VEGETATIVE_GROWTH_RATE: 0.25,
   CDIFF_SPORE_GERMINATION_BASE: 0.01,
   CDIFF_SPORE_GERMINATION_EMPTY: 0.40,
   CDIFF_ANTIBIOTIC_KILL_VEGETATIVE: 0.8,
   CDIFF_ANTIBIOTIC_KILL_SPORES: 0.0,
-  CDIFF_TOXIN_PRODUCTION_RATE: 0.20,
   CDIFF_TOXIN_DECAY_RATE: 0.10,
   CDIFF_SPORULATION_RATE: 0.05,
+
+  // C. diff virulence (1-10 scale, default 5)
+  // Maps to growth rate and toxin production via linear interpolation
+  CDIFF_DEFAULT_VIRULENCE: 5,
+  CDIFF_GROWTH_RATE_MIN: 0.05,   // virulence 1
+  CDIFF_GROWTH_RATE_MAX: 0.45,   // virulence 10
+  CDIFF_TOXIN_RATE_MIN: 0.05,    // virulence 1
+  CDIFF_TOXIN_RATE_MAX: 0.35,    // virulence 10
 
   // Competitive exclusion
   COMPETITIVE_EXCLUSION_THRESHOLD: 0.3,
@@ -38,7 +44,6 @@ export const DEFAULTS = {
   RECURRENCE_THRESHOLD: 0.3,
 
   // Outcome thresholds
-  DURABLE_CURE_TICKS: 30,
   MAX_SIMULATION_TICKS: 180,
 
   // Randomization variance

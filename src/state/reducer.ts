@@ -7,10 +7,11 @@ export interface AppState {
 }
 
 export type AppAction =
-  | { type: 'INIT_SIMULATION'; seed?: number }
+  | { type: 'INIT_SIMULATION'; seed?: number; virulence?: number }
   | { type: 'PLAYER_ACTION'; action: PlayerAction }
   | { type: 'ADVANCE_ONE_TICK' }
   | { type: 'ADVANCE_WEEK' }
+  | { type: 'SET_VIRULENCE'; virulence: number }
   | { type: 'RESET' }
 
 export function simulationReducer(state: AppState, action: AppAction): AppState {
@@ -18,7 +19,7 @@ export function simulationReducer(state: AppState, action: AppAction): AppState 
     case 'INIT_SIMULATION': {
       const seed = action.seed ?? Date.now()
       const rng = createRNG(seed)
-      return { simulation: createInitialState(rng, seed) }
+      return { simulation: createInitialState(rng, seed, action.virulence) }
     }
 
     case 'PLAYER_ACTION': {
@@ -48,10 +49,16 @@ export function simulationReducer(state: AppState, action: AppAction): AppState 
       return { simulation: sim }
     }
 
+    case 'SET_VIRULENCE': {
+      return {
+        simulation: { ...state.simulation, cdiffVirulence: action.virulence },
+      }
+    }
+
     case 'RESET': {
       const seed = Date.now()
       const rng = createRNG(seed)
-      return { simulation: createInitialState(rng, seed) }
+      return { simulation: createInitialState(rng, seed, state.simulation.cdiffVirulence) }
     }
   }
 }
