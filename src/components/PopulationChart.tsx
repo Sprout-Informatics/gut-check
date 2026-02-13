@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import {
+  AreaChart,
   ComposedChart,
   Area,
   Line,
@@ -34,7 +35,9 @@ export default function PopulationChart() {
       <div className="bg-white border border-gray-200 rounded-lg p-4">
         <h2 className="text-lg font-semibold text-gray-800 mb-3">Population Dynamics</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <ComposedChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+          <AreaChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+            stackOffset="none"
+          >
             <XAxis
               dataKey="tick"
               label={{ value: 'Day', position: 'insideBottomRight', offset: -5 }}
@@ -55,19 +58,21 @@ export default function PopulationChart() {
               type="monotone"
               dataKey="commensals"
               name="Commensals"
+              stackId="1"
               stroke="#16a34a"
               fill="#22c55e"
-              fillOpacity={0.6}
+              fillOpacity={0.7}
             />
             <Area
               type="monotone"
               dataKey="cdiffAbundance"
               name="C. diff"
+              stackId="1"
               stroke="#dc2626"
               fill="#ef4444"
-              fillOpacity={0.5}
+              fillOpacity={0.7}
             />
-          </ComposedChart>
+          </AreaChart>
         </ResponsiveContainer>
       </div>
 
