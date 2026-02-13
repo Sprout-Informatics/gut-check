@@ -43,7 +43,7 @@ export type PlayerAction =
   | { type: 'ADMINISTER_THERAPEUTIC'; dose?: number }
   | { type: 'WAIT_AND_MONITOR' }
 
-export type SimulationOutcome = 'durable_cure' | 'chronic_cdiff' | 'patient_death' | 'in_progress'
+export type SimulationOutcome = 'simulation_complete' | 'patient_death'
 
 export interface SimulationState {
   tick: number
@@ -61,5 +61,6 @@ export interface SimulationState {
   history: HistoryEntry[]
   events: GameEvent[]
   rngSeed: number
+  cumulativeHealth: number
   outcome: SimulationOutcome | null
 }

@@ -26,8 +26,12 @@ function makeHistoryEntry(state: SimulationState): HistoryEntry {
 }
 
 export function determinePhase(state: SimulationState): SimulationPhase {
-  if (state.outcome === 'durable_cure') return 'resolved'
-  if (state.outcome === 'chronic_cdiff' || state.outcome === 'patient_death') return 'chronic_infection'
+  if (state.outcome === 'patient_death') return 'chronic_infection'
+  if (state.outcome === 'simulation_complete') {
+    // Evaluate final state for phase display
+    if (state.totalCommensalAbundance > 0.5 && state.cdiff.vegetative < 0.08) return 'resolved'
+    return 'chronic_infection'
+  }
   if (state.therapeuticApplied && state.totalCommensalAbundance > 0.5) return 'microbiome_therapeutic'
   if (state.antibioticActive && state.antibioticCoursesGiven > 1) return 'antibiotic_trap'
   if (state.cdiff.vegetative > DEFAULTS.RECURRENCE_THRESHOLD) return 'cdiff_bloom'
@@ -36,25 +40,14 @@ export function determinePhase(state: SimulationState): SimulationPhase {
 }
 
 export function checkOutcome(state: SimulationState): SimulationOutcome | null {
-  // Durable cure: C. diff abundance below threshold for DURABLE_CURE_TICKS consecutive ticks
-  // AND commensals above 0.5
-  if (state.history.length >= DEFAULTS.DURABLE_CURE_TICKS) {
-    const recentHistory = state.history.slice(-DEFAULTS.DURABLE_CURE_TICKS)
-    const allLow = recentHistory.every((h) => h.cdiffAbundance < 0.08)
-    const commensalsHealthy = state.totalCommensalAbundance > 0.5
-    if (allLow && commensalsHealthy && state.antibioticCoursesGiven > 0) {
-      return 'durable_cure'
-    }
-  }
-
   // Patient death: health reached 0
   if (state.healthScore <= 0) {
     return 'patient_death'
   }
 
-  // Chronic infection: exceeded max ticks
+  // Simulation complete: reached max ticks
   if (state.tick >= DEFAULTS.MAX_SIMULATION_TICKS) {
-    return 'chronic_cdiff'
+    return 'simulation_complete'
   }
 
   return null
@@ -93,7 +86,8 @@ export function tick(state: SimulationState, rng: RNG): SimulationState {
 
   // 5. Health score
   const healthScore = updateHealthScore(newState.healthScore, newState.cdiff.toxinLevel)
-  newState = { ...newState, healthScore }
+  const cumulativeHealth = newState.cumulativeHealth + healthScore
+  newState = { ...newState, healthScore, cumulativeHealth }
 
   // 6. Recurrence check
   if (
@@ -123,23 +117,17 @@ export function tick(state: SimulationState, rng: RNG): SimulationState {
   const outcome = checkOutcome(newState)
   if (outcome && !state.outcome) {
     const outcomeEvents = [...newState.events]
-    if (outcome === 'durable_cure') {
-      outcomeEvents.push({
-        tick: newState.tick,
-        type: 'success',
-        message: 'Durable cure achieved! The microbiome has been restored.',
-      })
-    } else if (outcome === 'patient_death') {
+    if (outcome === 'patient_death') {
       outcomeEvents.push({
         tick: newState.tick,
         type: 'critical',
         message: 'The patient has died from overwhelming C. difficile toxin damage.',
       })
-    } else if (outcome === 'chronic_cdiff') {
+    } else if (outcome === 'simulation_complete') {
       outcomeEvents.push({
         tick: newState.tick,
-        type: 'critical',
-        message: 'The patient developed chronic C. difficile infection.',
+        type: 'info',
+        message: 'Simulation complete. Review your patient outcome below.',
       })
     }
     newState = { ...newState, outcome, events: outcomeEvents, phase: determinePhase({ ...newState, outcome }) }
@@ -194,6 +182,7 @@ export function createInitialState(rng: RNG, seed: number): SimulationState {
     antibioticCoursesGiven: 0,
     therapeuticApplied: false,
     recurrenceCount: 0,
+    cumulativeHealth: 0,
     history: [],
     events: [
       {

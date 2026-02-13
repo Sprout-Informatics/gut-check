@@ -96,7 +96,7 @@ describe('5-phase narrative arc', () => {
     expect(state.cdiff.vegetative).toBeGreaterThan(0.005)
   })
 
-  it('Phase 5: therapeutic restores commensals and achieves durable cure', () => {
+  it('Phase 5: therapeutic restores commensals and suppresses C. diff', () => {
     const rng = createRNG(42)
     const initial = createInitialState(rng, 42)
 
@@ -124,22 +124,27 @@ describe('5-phase narrative arc', () => {
   })
 })
 
-describe('durable cure outcome', () => {
-  it('outcome becomes durable_cure after sustained low C. diff', () => {
+describe('simulation outcome', () => {
+  it('simulation runs to completion at MAX_SIMULATION_TICKS', () => {
     const rng = createRNG(42)
     const initial = createInitialState(rng, 42)
 
-    // Disrupt and restore
-    let state = applyAction(initial, { type: 'ADMINISTER_ANTIBIOTICS' }, createRNG(1000))
-    state = advanceTicks(state, 10, 42)
-    state = advanceTicks(state, 10, 42)
-    state = applyAction(state, { type: 'ADMINISTER_THERAPEUTIC' }, createRNG(3000))
+    const state = advanceTicks(initial, DEFAULTS.MAX_SIMULATION_TICKS, 42)
 
-    // Run many ticks to achieve durable cure (stronger C. diff needs more time)
-    state = advanceTicks(state, 120, 42)
+    expect(state.outcome).toBe('simulation_complete')
+    expect(state.tick).toBe(DEFAULTS.MAX_SIMULATION_TICKS)
+  })
 
-    expect(state.outcome).toBe('durable_cure')
-    expect(state.phase).toBe('resolved')
+  it('tracks cumulative health for scoring', () => {
+    const rng = createRNG(42)
+    const initial = createInitialState(rng, 42)
+
+    const state = advanceTicks(initial, 10, 42)
+
+    expect(state.cumulativeHealth).toBeGreaterThan(0)
+    // With no intervention, health should stay near 100 for 10 ticks
+    const avgHealth = state.cumulativeHealth / state.tick
+    expect(avgHealth).toBeGreaterThan(90)
   })
 })
 

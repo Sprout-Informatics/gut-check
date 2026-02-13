@@ -38,7 +38,6 @@ export const DEFAULTS = {
   RECURRENCE_THRESHOLD: 0.3,
 
   // Outcome thresholds
-  DURABLE_CURE_TICKS: 30,
   MAX_SIMULATION_TICKS: 180,
 
   // Randomization variance
