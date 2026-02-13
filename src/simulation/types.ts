@@ -58,6 +58,7 @@ export interface SimulationState {
   antibioticCoursesGiven: number
   therapeuticApplied: boolean
   recurrenceCount: number
+  cdiffVirulence: number
   history: HistoryEntry[]
   events: GameEvent[]
   rngSeed: number

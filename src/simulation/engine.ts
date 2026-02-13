@@ -84,6 +84,26 @@ export function tick(state: SimulationState, rng: RNG): SimulationState {
   const newCdiff = updateCDiff(newState, rng)
   newState = { ...newState, cdiff: newCdiff }
 
+  // 4b. Enforce shared carrying capacity: commensals + C. diff <= 1.0
+  const totalPop = newState.totalCommensalAbundance + newState.cdiff.spores + newState.cdiff.vegetative
+  if (totalPop > DEFAULTS.COMMENSAL_TOTAL_CAPACITY) {
+    const scale = DEFAULTS.COMMENSAL_TOTAL_CAPACITY / totalPop
+    const scaledCommensals = newState.commensals.map((s) => ({
+      ...s,
+      abundance: s.abundance * scale,
+    }))
+    newState = {
+      ...newState,
+      commensals: scaledCommensals,
+      totalCommensalAbundance: newState.totalCommensalAbundance * scale,
+      cdiff: {
+        ...newState.cdiff,
+        spores: newState.cdiff.spores * scale,
+        vegetative: newState.cdiff.vegetative * scale,
+      },
+    }
+  }
+
   // 5. Health score
   const healthScore = updateHealthScore(newState.healthScore, newState.cdiff.toxinLevel)
   const cumulativeHealth = newState.cumulativeHealth + healthScore
@@ -163,7 +183,7 @@ export function applyAction(state: SimulationState, action: PlayerAction, rng: R
   }
 }
 
-export function createInitialState(rng: RNG, seed: number): SimulationState {
+export function createInitialState(rng: RNG, seed: number, virulence?: number): SimulationState {
   const commensals = generateInitialProfile(rng)
   const cdiff = generateInitialCDiffState(rng)
   const totalCommensalAbundance = commensals.reduce((sum, s) => sum + s.abundance, 0)
@@ -182,6 +202,7 @@ export function createInitialState(rng: RNG, seed: number): SimulationState {
     antibioticCoursesGiven: 0,
     therapeuticApplied: false,
     recurrenceCount: 0,
+    cdiffVirulence: virulence ?? DEFAULTS.CDIFF_DEFAULT_VIRULENCE,
     cumulativeHealth: 0,
     history: [],
     events: [

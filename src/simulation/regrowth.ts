@@ -16,8 +16,8 @@ export function applyNaturalRegrowthTick(state: SimulationState, rng: RNG): Simu
       return { ...species, abundance }
     }
 
-    // Logistic growth toward carrying capacity
-    const available = DEFAULTS.COMMENSAL_TOTAL_CAPACITY - totalCommensal - state.cdiff.vegetative
+    // Logistic growth toward carrying capacity (shared with all C. diff)
+    const available = DEFAULTS.COMMENSAL_TOTAL_CAPACITY - totalCommensal - state.cdiff.vegetative - state.cdiff.spores
     if (available > 0) {
       const growth = species.growthRate
         * abundance

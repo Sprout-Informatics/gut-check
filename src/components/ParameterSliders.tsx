@@ -9,14 +9,15 @@ interface SliderProps {
   step: number
   value: number
   onChange: (value: number) => void
+  format?: (v: number) => string
 }
 
-function Slider({ label, description, min, max, step, value, onChange }: SliderProps) {
+function Slider({ label, description, min, max, step, value, onChange, format }: SliderProps) {
   return (
     <div>
       <div className="flex justify-between items-center mb-1">
         <label className="text-sm font-medium text-gray-700">{label}</label>
-        <span className="text-sm font-mono text-gray-500">{value.toFixed(2)}</span>
+        <span className="text-sm font-mono text-gray-500">{format ? format(value) : value.toFixed(2)}</span>
       </div>
       <input
         type="range"
@@ -33,20 +34,19 @@ function Slider({ label, description, min, max, step, value, onChange }: SliderP
 }
 
 export default function ParameterSliders() {
-  const { dispatch } = useSimulation()
+  const { state, dispatch } = useSimulation()
   const [open, setOpen] = useState(false)
   const [seedInput, setSeedInput] = useState('')
 
   // These are display-only defaults since we restart on change
   const [antibioticIntensity, setAntibioticIntensity] = useState(0.7)
   const [therapeuticDose, setTherapeuticDose] = useState(0.4)
-  const [cdiffGrowth, setCdiffGrowth] = useState(0.15)
   const [commensalRecovery, setCommensalRecovery] = useState(0.08)
 
   const handleStartWithSeed = () => {
     const seed = parseInt(seedInput, 10)
     if (!isNaN(seed)) {
-      dispatch({ type: 'INIT_SIMULATION', seed })
+      dispatch({ type: 'INIT_SIMULATION', seed, virulence: state.simulation.cdiffVirulence })
     }
   }
 
@@ -87,6 +87,16 @@ export default function ParameterSliders() {
 
           {/* Sliders */}
           <Slider
+            label="C. diff Virulence"
+            description="Strain-level aggressiveness: affects both growth rate and toxin production. Higher = faster growing, more toxic."
+            min={1}
+            max={10}
+            step={1}
+            value={state.simulation.cdiffVirulence}
+            onChange={(v) => dispatch({ type: 'SET_VIRULENCE', virulence: v })}
+            format={(v) => `${v} / 10`}
+          />
+          <Slider
             label="Antibiotic Intensity"
             description="How destructive antibiotics are to gut bacteria. Higher = more collateral damage."
             min={0.3}
@@ -105,15 +115,6 @@ export default function ParameterSliders() {
             onChange={setTherapeuticDose}
           />
           <Slider
-            label="C. diff Growth Rate"
-            description="How aggressively C. difficile expands when the gut is vacant."
-            min={0.05}
-            max={0.3}
-            step={0.01}
-            value={cdiffGrowth}
-            onChange={setCdiffGrowth}
-          />
-          <Slider
             label="Commensal Recovery Rate"
             description="How quickly commensal bacteria regrow naturally after disruption."
             min={0.03}
@@ -124,7 +125,7 @@ export default function ParameterSliders() {
           />
 
           <p className="text-xs text-gray-400 italic">
-            Parameter tuning will be applied in a future update. Currently, the seed input is functional.
+            C. diff virulence is active. Other parameter tuning will be applied in a future update. The seed input is functional.
           </p>
         </div>
       )}

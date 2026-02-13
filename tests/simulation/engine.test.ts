@@ -148,6 +148,22 @@ describe('simulation outcome', () => {
   })
 })
 
+describe('shared carrying capacity', () => {
+  it('total population never exceeds 1.0 during simulation', () => {
+    const rng = createRNG(42)
+    const initial = createInitialState(rng, 42)
+
+    // Disrupt then let C. diff bloom
+    let state = applyAction(initial, { type: 'ADMINISTER_ANTIBIOTICS' }, createRNG(1000))
+    state = advanceTicks(state, 60, 42)
+
+    for (const h of state.history) {
+      const total = h.totalCommensalAbundance + h.cdiffAbundance
+      expect(total).toBeLessThanOrEqual(1.001) // small float tolerance
+    }
+  })
+})
+
 describe('determinism', () => {
   it('same seed produces identical state after N ticks', () => {
     const seed = 42
