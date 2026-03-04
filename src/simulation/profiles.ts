@@ -2,31 +2,14 @@ import type { BacterialPopulation, CDiffState } from './types'
 import type { RNG } from './random'
 import { fisherYatesShuffle } from './random'
 import { DEFAULTS } from './constants'
-
-const COMMENSAL_POOL = [
-  'Bacteroides',
-  'Faecalibacterium',
-  'Roseburia',
-  'Bifidobacterium',
-  'Lactobacillus',
-  'Eubacterium',
-  'Ruminococcus',
-  'Prevotella',
-  'Akkermansia',
-  'Clostridium_commensal',
-  'Blautia',
-  'Coprococcus',
-  'Dorea',
-  'Streptococcus',
-  'Enterococcus',
-]
+import { COMMENSAL_SPECIES_POOL } from './commensal-species'
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value))
 }
 
 export function generateInitialProfile(rng: RNG): BacterialPopulation[] {
-  const shuffled = fisherYatesShuffle(COMMENSAL_POOL, rng)
+  const shuffled = fisherYatesShuffle(COMMENSAL_SPECIES_POOL, rng)
   const count = DEFAULTS.INITIAL_COMMENSAL_SPECIES_COUNT
   const selected = shuffled.slice(0, count)
 

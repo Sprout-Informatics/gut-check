@@ -49,6 +49,7 @@ export function applyTherapeuticIntervention(state: SimulationState, rng: RNG): 
     const boost = boostPerSpecies * (1 + rng.gaussian(0, 0.05))
     newCommensals[index].abundance += Math.max(0, boost)
     newCommensals[index].growthRate += DEFAULTS.THERAPEUTIC_ENGRAFTMENT_BONUS
+    newCommensals[index].isTherapeutic = true
     boosted++
   }
 
@@ -59,6 +60,7 @@ export function applyTherapeuticIntervention(state: SimulationState, rng: RNG): 
       name: `Therapeutic_${therapeuticNum}`,
       abundance: boostPerSpecies * (1 + rng.gaussian(0, 0.05)),
       isCommensal: true,
+      isTherapeutic: true,
       growthRate: DEFAULTS.COMMENSAL_BASE_GROWTH_RATE + DEFAULTS.THERAPEUTIC_ENGRAFTMENT_BONUS,
       antibioticSensitivity: rng.range(0.4, 0.8),
       competitiveStrength: rng.range(0.4, 0.8),

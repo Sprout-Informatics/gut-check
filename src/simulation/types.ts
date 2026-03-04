@@ -2,9 +2,36 @@ export interface BacterialPopulation {
   name: string
   abundance: number
   isCommensal: boolean
+  isTherapeutic?: boolean
   antibioticSensitivity: number
   growthRate: number
   competitiveStrength: number
+}
+
+// --- Metagenomic sampling types ---
+
+export type SpeciesCategory = 'commensal' | 'cdiff' | 'therapeutic'
+
+export interface SampleSpecies {
+  name: string
+  category: SpeciesCategory
+  abundance: number   // 0–100; all species sum to 100
+  readCount: number
+}
+
+export interface SequencingRead {
+  id: number
+  species: string
+  category: SpeciesCategory
+  sequence: string         // 24-bp deterministic fake sequence
+  userLabel: SpeciesCategory | null
+}
+
+export interface MicrobiomeSample {
+  tick: number
+  species: SampleSpecies[]
+  reads: SequencingRead[]  // all reads, pre-shuffled
+  totalReads: number
 }
 
 export interface CDiffState {
