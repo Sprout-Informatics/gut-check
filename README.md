@@ -1,30 +1,34 @@
-# Gut Check: The Microbiome Game
+# When Bugs Go Bad: How Antibiotics Can Pave the Way for Opportunistic Bacteria and Deadly Infections
 
-An interactive simulation that teaches you why *Clostridioides difficile* (C. diff) infections keep coming back — and why the solution isn't more antibiotics.
+This is an interactive simulation that teaches you why *Clostridioides difficile (C. diff)* infections keep coming back — and why the solution isn't more antibiotics.
 
 ## What is this?
 
-Gut Check is a browser-based simulation where you manage a patient's gut microbiome. You'll make treatment decisions — antibiotics, microbiome therapy, or watchful waiting — and see how those choices play out in real time through population dynamics charts and a patient health score.
+Spore Wars is a browser-based simulation where you manage a patient's gut microbiome. You'll make treatment decisions — antibiotics, microbiome therapy, or watchful waiting — and see how those choices play out in real time through population dynamics charts and a patient health score.
 
-The goal: achieve a **durable cure** without killing your patient or trapping them in an endless cycle of recurrence.
+The goal: achieve a **durable cure** without killing your patient or trapping them in an endless cycle of *C. difficile* recurrence.
 
 ## The biology
 
-Your gut is home to trillions of bacteria, collectively called the **microbiome**. Most of these are **commensal bacteria** — they're not just harmless passengers, they actively protect you. They compete for space and nutrients, produce antimicrobial compounds, and generate secondary bile acids that keep dangerous organisms in check. This is called **colonization resistance**.
+Your gut is home to trillions of bacteria, collectively called the **microbiome**. Most of these are considered **commensals**, meaning they exist in a symbiotic relationship with their host (us). They compete for space and nutrients within your gut, helping you digest, modulating your immune system, and keep dangerous organisms in check in various ways.
 
-**C. difficile** is an opportunistic pathogen that lurks in the gut as dormant **spores**. In a healthy gut, commensal bacteria suppress C. diff through competitive exclusion — there's simply no room for it to grow. But when antibiotics wipe out the commensals, the ecological niche opens up. C. diff spores germinate, the vegetative cells multiply rapidly, and they produce **toxins** that damage the intestinal lining, causing severe diarrhea, inflammation, and in serious cases, death.
+*C. difficile* is a species of bacteria and an opportunistic pathogen. Some strains of *C. difficile* can produce a toxin which causes infection. In a healthy gut, commensal bacteria suppress C. diff through competitive exclusion — there's simply no room for it to grow. 
 
-## The problem with antibiotics
+However, when **antibiotics** wipe out the commensals, an ecological niche opens up. *C. difficile* **spores** (like eggs--a dormant form of bacteria) germinate, the **vegetative** ("awakened") cells multiply rapidly, and toxins produced by pathogenic strains of *C. difficile* damage the intestinal lining, causing severe diarrhea, inflammation, and in serious cases, death.
 
-Here's the paradox that this simulation demonstrates: the standard treatment for a C. diff infection is *more antibiotics* (vancomycin or fidaxomicin). And it works — temporarily. The antibiotics kill the active C. diff cells and the patient feels better. But they also wipe out the recovering commensals, leaving the gut empty again. C. diff spores, which are resistant to antibiotics, survive. When the antibiotic course ends, the spores germinate into that empty niche and the infection comes roaring back.
+## A vicious cycle
 
-This is the **antibiotic trap**: each course of antibiotics treats the symptoms but perpetuates the root cause. Up to 35% of patients who get a first C. diff infection will have a recurrence, and after a first recurrence, the risk of further recurrences rises to 60%.
+The standard treatment for a *C. difficile* infection is *more antibiotics*: The antibiotics kill the active *C. difficile* and the patient feels better. But the antibiotics also wipe out the recovering commensals, leaving the gut empty again. *C. difficile* spores, which are resistant to antibiotics, survive. When the course of antibiotics ends, the spores germinate into that empty niche and the infection returns.
 
-## The therapeutic gap
+Up to 35% of patients who get a first *C. difficile* infection will have a recurrence, and after a first recurrence, the risk of further recurrences rises to 60%.
 
-If antibiotics can't break the cycle, what can? The answer is to restore the ecosystem itself. **Microbiome therapeutics** like [Vowst (fecal microbiota spores, live — SER-109)](https://www.fda.gov/vaccines-blood-biologics/vowst) take a fundamentally different approach. Instead of killing C. diff directly, they deliver a consortium of commensal bacterial spores to the gut. These spores engraft, multiply, and reestablish competitive exclusion — crowding C. diff out of its niche and restoring colonization resistance.
+## Treating the problem at its source
 
-In the simulation, you'll see this play out: after administering the microbiome therapeutic, commensal bacteria bloom and fill the gut niche within 1–2 weeks, driving C. diff abundance and toxin levels down to zero.
+If antibiotics can't break the cycle, what can? Since *C. difficile* infection is caused by a **dysbiosis** (imbalance) in the gut, the answer is to restore a healthy ecosystem.
+
+**Microbiome therapeutics** like [Vowst](https://www.fda.gov/vaccines-blood-biologics/vowst) (developed by [Seres Therapeutics](https://www.serestherapeutics.com/)) take a fundamentally different approach. Instead of killing *C. difficile* directly, they deliver a consortium of commensal bacterial spores to the gut. These spores engraft, multiply, and quickly reestablish a complex, healthy gut ecosystem, preventing *C. difficile* from proliferating.
+
+In the simulation, you'll see this play out: after administering the microbiome therapeutic, commensal bacteria bloom and fill the gut niche within 1–2 weeks, driving *C. difficile* abundance and toxin levels down.
 
 ## How to play
 
@@ -53,8 +57,17 @@ In the simulation, you'll see this play out: after administering the microbiome 
 
 ## Running locally
 
+This simulation can be run locally. To do that, clone the repo to your local machine and run `npm`. If you don't have `npm` installed, install it:
+
 ```bash
 npm install
+```
+
+Clone and run the app:
+
+```bash
+git clone https://github.com/Sprout-Informatics/spore-wars.git
+cd spore-wars
 npm run dev
 ```
 
