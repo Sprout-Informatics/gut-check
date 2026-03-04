@@ -4,19 +4,19 @@ interface LandingPageProps {
 
 export default function LandingPage({ onStart }: LandingPageProps) {
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100">
+    <div className="min-h-screen bg-white text-slate-800">
       {/* Hero Section */}
       <header className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-950/40 via-gray-950 to-emerald-950/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-white to-slate-50" />
         <div className="relative max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
-          <p className="text-sm font-semibold tracking-widest uppercase text-red-400 mb-4">
+          <p className="text-sm font-semibold tracking-widest uppercase text-teal-600 mb-4">
             An Interactive Microbiome Simulation
           </p>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-            <span className="text-white">GUT</span>{' '}
-            <span className="text-emerald-400">CHECK</span>
+            <span className="text-slate-900">GUT</span>{' '}
+            <span className="text-teal-700">CHECK</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
             Why more antibiotics can make things worse &mdash; and how a
             radical idea changed everything.
           </p>
@@ -25,14 +25,14 @@ export default function LandingPage({ onStart }: LandingPageProps) {
 
       {/* The Problem */}
       <section className="max-w-3xl mx-auto px-6 py-16">
-        <div className="space-y-6 text-lg leading-relaxed text-gray-300">
-          <h2 className="text-3xl font-bold text-white mb-8">
+        <div className="space-y-6 text-lg leading-relaxed text-slate-600">
+          <h2 className="text-3xl font-bold text-slate-900 mb-8">
             A Silent Epidemic
           </h2>
           <p>
             Every year, <em>Clostridioides difficile</em> infects nearly{' '}
-            <strong className="text-white">500,000 Americans</strong> and kills roughly{' '}
-            <strong className="text-white">30,000</strong>. It is the most common
+            <strong className="text-slate-900">500,000 Americans</strong> and kills roughly{' '}
+            <strong className="text-slate-900">30,000</strong>. It is the most common
             healthcare-associated infection in the United States. But the most
             alarming part isn't the first infection &mdash; it's what comes after.
           </p>
@@ -43,10 +43,10 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             back.
           </p>
           <p>
-            Up to <strong className="text-white">35% of patients</strong> experience
+            Up to <strong className="text-slate-900">35% of patients</strong> experience
             recurrence after their first episode. For those who recur once, the
             odds of it happening again climb to{' '}
-            <strong className="text-white">60%</strong>. Some patients cycle
+            <strong className="text-slate-900">60%</strong>. Some patients cycle
             through four, five, six rounds of antibiotics, each time hoping
             this course will be the last.
           </p>
@@ -55,12 +55,12 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       </section>
 
       {/* The Trap */}
-      <section className="bg-gray-900/60">
+      <section className="bg-teal-50">
         <div className="max-w-3xl mx-auto px-6 py-16">
-          <h2 className="text-3xl font-bold text-white mb-8">
+          <h2 className="text-3xl font-bold text-slate-900 mb-8">
             The Antibiotic Trap
           </h2>
-          <div className="space-y-6 text-lg leading-relaxed text-gray-300">
+          <div className="space-y-6 text-lg leading-relaxed text-slate-600">
             <p>
               The human gut is home to trillions of bacteria &mdash; a dense,
               competitive ecosystem where hundreds of species vie for space and
@@ -74,31 +74,31 @@ export default function LandingPage({ onStart }: LandingPageProps) {
               Antibiotics shatter this ecosystem. They don't just kill{' '}
               <em>C. difficile</em> &mdash; they kill the beneficial bacteria
               too. And here's the cruel trick:{' '}
-              <em>C. difficile</em> produces <strong className="text-white">spores</strong>,
+              <em>C. difficile</em> produces <strong className="text-slate-900">spores</strong>,
               dormant survival structures that antibiotics cannot touch.
             </p>
 
             <div className="my-10 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-gray-800/80 border border-gray-700 rounded-xl p-5 text-center">
+              <div className="bg-white border border-slate-200 rounded-xl p-5 text-center shadow-sm">
                 <div className="text-3xl mb-3">💊</div>
-                <h3 className="font-semibold text-amber-400 mb-2">Antibiotics Kill</h3>
-                <p className="text-sm text-gray-400">
+                <h3 className="font-semibold text-amber-600 mb-2">Antibiotics Kill</h3>
+                <p className="text-sm text-slate-500">
                   Both the pathogen <em>and</em> the protective commensal bacteria
                   are wiped out.
                 </p>
               </div>
-              <div className="bg-gray-800/80 border border-gray-700 rounded-xl p-5 text-center">
+              <div className="bg-white border border-slate-200 rounded-xl p-5 text-center shadow-sm">
                 <div className="text-3xl mb-3">🦠</div>
-                <h3 className="font-semibold text-red-400 mb-2">Spores Survive</h3>
-                <p className="text-sm text-gray-400">
+                <h3 className="font-semibold text-red-600 mb-2">Spores Survive</h3>
+                <p className="text-sm text-slate-500">
                   <em>C. difficile</em> spores lie dormant, impervious to
                   antibiotics, waiting.
                 </p>
               </div>
-              <div className="bg-gray-800/80 border border-gray-700 rounded-xl p-5 text-center">
+              <div className="bg-white border border-slate-200 rounded-xl p-5 text-center shadow-sm">
                 <div className="text-3xl mb-3">🔄</div>
-                <h3 className="font-semibold text-orange-400 mb-2">Recurrence</h3>
-                <p className="text-sm text-gray-400">
+                <h3 className="font-semibold text-orange-600 mb-2">Recurrence</h3>
+                <p className="text-sm text-slate-500">
                   With no competition, spores germinate and the infection
                   returns &mdash; often worse than before.
                 </p>
@@ -117,24 +117,24 @@ export default function LandingPage({ onStart }: LandingPageProps) {
 
       {/* The Breakthrough */}
       <section className="max-w-3xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-white mb-8">
+        <h2 className="text-3xl font-bold text-slate-900 mb-8">
           A Different Kind of Medicine
         </h2>
-        <div className="space-y-6 text-lg leading-relaxed text-gray-300">
+        <div className="space-y-6 text-lg leading-relaxed text-slate-600">
           <p>
             What if the answer wasn't to keep killing the pathogen, but to
             restore the ecosystem that keeps it in check?
           </p>
           <p>
             This was the question that drove{' '}
-            <strong className="text-white">Seres Therapeutics</strong>, a
+            <strong className="text-slate-900">Seres Therapeutics</strong>, a
             Cambridge, Massachusetts biotech company founded on a deceptively
             simple insight: the microbiome itself is the medicine. Rather than
             designing a molecule to attack <em>C. difficile</em>, they set out
             to rebuild the bacterial community that naturally suppresses it.
           </p>
           <p>
-            Their lead candidate, <strong className="text-white">SER-109</strong>,
+            Their lead candidate, <strong className="text-slate-900">SER-109</strong>,
             was a defined consortium of purified bacterial spores derived from
             healthy donor stool. Not a fecal transplant &mdash; a manufactured,
             quality-controlled therapeutic delivered as an oral capsule. The
@@ -142,15 +142,15 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             by restoring an ecology rather than targeting a pathogen.
           </p>
 
-          <div className="my-10 border-l-4 border-emerald-500 bg-emerald-950/30 rounded-r-xl p-6">
-            <p className="text-emerald-300 font-semibold mb-2">
+          <div className="my-10 border-l-4 border-teal-500 bg-teal-50 rounded-r-xl p-6">
+            <p className="text-teal-700 font-semibold mb-2">
               The ECOSPOR III Trial
             </p>
-            <p className="text-gray-300">
+            <p className="text-slate-600">
               In a pivotal Phase 3 trial, SER-109 reduced recurrence of{' '}
               <em>C. difficile</em> infection to{' '}
-              <strong className="text-white">12%</strong>, compared to{' '}
-              <strong className="text-white">40%</strong> for placebo &mdash; a
+              <strong className="text-slate-900">12%</strong>, compared to{' '}
+              <strong className="text-slate-900">40%</strong> for placebo &mdash; a
               relative risk reduction of 68%. For patients trapped in the
               recurrence cycle, this was transformative.
             </p>
@@ -158,7 +158,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
 
           <p>
             In April 2023, the FDA approved SER-109 under the brand name{' '}
-            <strong className="text-white">VOWST</strong><sup>&trade;</sup>,
+            <strong className="text-slate-900">VOWST</strong><sup>&trade;</sup>,
             making it the first FDA-approved oral microbiome therapeutic. It
             marked a milestone not just for <em>C. difficile</em> treatment,
             but for the entire field of microbiome medicine &mdash; proof that
@@ -169,14 +169,14 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       </section>
 
       {/* The Simulation */}
-      <section className="bg-gray-900/60">
+      <section className="bg-teal-50">
         <div className="max-w-3xl mx-auto px-6 py-16 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold text-slate-900 mb-6">
             Experience It Yourself
           </h2>
-          <div className="space-y-6 text-lg leading-relaxed text-gray-300 text-left mb-10">
+          <div className="space-y-6 text-lg leading-relaxed text-slate-600 text-left mb-10">
             <p>
-              <strong className="text-white">Gut Check</strong> is an
+              <strong className="text-slate-900">Gut Check</strong> is an
               interactive simulation that lets you manage a patient with
               recurrent <em>C. difficile</em> infection over 180 days. You'll
               decide when to prescribe antibiotics, when to administer
@@ -197,7 +197,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
 
           <button
             onClick={onStart}
-            className="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-bold text-lg px-10 py-4 rounded-xl shadow-lg shadow-emerald-900/40 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-3 bg-teal-700 hover:bg-teal-600 active:bg-teal-800 text-white font-bold text-lg px-10 py-4 rounded-xl shadow-lg shadow-teal-700/20 transition-colors cursor-pointer"
           >
             Start the Simulation
             <svg
@@ -218,7 +218,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       </section>
 
       {/* Footer */}
-      <footer className="max-w-3xl mx-auto px-6 py-10 text-center text-sm text-gray-600">
+      <footer className="max-w-3xl mx-auto px-6 py-10 text-center text-sm text-slate-400">
         <p>
           Gut Check is an educational simulation. It is not medical advice.
           Clinical decisions should always be made with a healthcare provider.
