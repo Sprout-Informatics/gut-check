@@ -14,7 +14,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             <span className="text-teal-700">WARS</span>
           </h1>
           <img
-            src="/images/spore_wars2.png"
+            src={`${import.meta.env.BASE_URL}images/spore_wars2.png`}
             alt="Spore Wars — a Star Wars-themed spore illustration"
             className="mx-auto my-6 max-w-xs md:max-w-sm w-full rounded-xl shadow-md"
           />
