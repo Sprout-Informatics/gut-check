@@ -131,6 +131,18 @@ function getBlastHint(category: BacterialCategory): string {
   }
 }
 
+/** Number of sequences returned per sample to show community diversity */
+export const SEQUENCES_PER_SAMPLE = 10
+
+/**
+ * Take multiple samples from the current gut state and return BLAST-ready FASTA sequences.
+ * Returns SEQUENCES_PER_SAMPLE results so students can observe the diversity (or dominance)
+ * of species in the current microbiome.
+ */
+export function takeSamples(state: SimulationState, rng: RNG): SampleResult[] {
+  return Array.from({ length: SEQUENCES_PER_SAMPLE }, () => takeSample(state, rng))
+}
+
 /**
  * Take a sample from the current gut state and generate a BLAST-ready FASTA sequence.
  *
@@ -138,7 +150,7 @@ function getBlastHint(category: BacterialCategory): string {
  * @param rng - Seeded random number generator for reproducibility
  * @returns A SampleResult with FASTA sequence and metadata
  */
-export function takeSample(state: SimulationState, rng: RNG): SampleResult {
+function takeSample(state: SimulationState, rng: RNG): SampleResult {
   const { name, isCdiff } = selectOrganism(state, rng)
 
   // Look up the sequence data

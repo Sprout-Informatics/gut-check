@@ -1,11 +1,11 @@
 import type { SimulationState, PlayerAction } from '../simulation/types'
 import { createRNG } from '../simulation/random'
 import { createInitialState, applyAction, tick } from '../simulation/engine'
-import { takeSample, type SampleResult } from '../simulation/sequenceSampler'
+import { takeSamples, type SampleResult } from '../simulation/sequenceSampler'
 
 export interface AppState {
   simulation: SimulationState
-  lastSample: SampleResult | null
+  lastSample: SampleResult[] | null
 }
 
 export type AppAction =
@@ -61,8 +61,8 @@ export function simulationReducer(state: AppState, action: AppAction): AppState 
 
     case 'TAKE_SAMPLE': {
       const rng = createRNG(state.simulation.rngSeed + state.simulation.tick + 999)
-      const sample = takeSample(state.simulation, rng)
-      return { ...state, lastSample: sample }
+      const samples = takeSamples(state.simulation, rng)
+      return { ...state, lastSample: samples }
     }
 
     case 'RESET': {
