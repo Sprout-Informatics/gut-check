@@ -58,6 +58,16 @@ export default function PatientDashboard() {
 
         {/* Game Summary Modal */}
         <GameSummary />
+
+        {/* Disclaimer */}
+        <footer className="mt-8 py-6 text-center text-xs text-gray-400 border-t border-gray-200 space-y-1">
+          <p>Spore Wars is an educational simulation. It is not medical advice.</p>
+          <p>
+            <strong>Disclaimer:</strong> This is an educational exercise only. Spore Wars is not affiliated
+            with Seres Therapeutics and is not related to, endorsed by, or representative of the actual
+            VOWST&trade; product in any way. All simulation mechanics are simplified for educational purposes.
+          </p>
+        </footer>
       </div>
     </div>
   )
