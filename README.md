@@ -12,7 +12,7 @@ The goal: achieve a **durable cure** without killing your patient or trapping th
 
 Your gut is home to trillions of bacteria, collectively called the **microbiome**. Most of these are considered **commensals**, meaning they exist in a symbiotic relationship with their host (us). They compete for space and nutrients within your gut, helping you digest, modulating your immune system, and keep dangerous organisms in check in various ways.
 
-*C. difficile* is a species of bacteria and an opportunistic pathogen. Some strains of *C. difficile* can produce a toxin which causes infection. In a healthy gut, commensal bacteria suppress C. diff through competitive exclusion — there's simply no room for it to grow. 
+*C. difficile* is a species of bacteria and an opportunistic pathogen. Some strains of *C. difficile* can produce a toxin which causes infection. In a healthy gut, commensal bacteria suppress C. diff through competitive exclusion — there's simply no room for it to grow.
 
 However, when **antibiotics** wipe out the commensals, an ecological niche opens up. *C. difficile* **spores** (like eggs--a dormant form of bacteria) germinate, the **vegetative** ("awakened") cells multiply rapidly, and toxins produced by pathogenic strains of *C. difficile* damage the intestinal lining, causing severe diarrhea, inflammation, and in serious cases, death.
 
@@ -37,23 +37,95 @@ In the simulation, you'll see this play out: after administering the microbiome 
 3. **Decide** how to respond to the C. diff bloom: more antibiotics, microbiome therapy, or wait?
 4. **Learn** from the outcomes — can you achieve a durable cure?
 
+### Dashboard layout
+
+The patient dashboard is organized into four main areas:
+
+**Patient Status Row**
+- **Patient Health bar** — color-coded health score (green → red) with a C. diff episode counter tracking how many times the infection has rebounded
+- **Day counter** — the current simulation day, out of a maximum of 200
+
+**Charts and Right Panel**
+- **Population Dynamics chart** (left, two-thirds width) — stacked area chart showing commensal bacteria (green) and C. diff (red) competing for the gut niche (0–100 scale). The gap between their combined total and 100 represents depleted, unoccupied niche space.
+- **Patient Health & Toxin chart** (left, lower) — health score (purple) and C. diff toxin level (orange, dashed). Toxin trails the C. diff bloom — it builds up as C. diff grows and decays as C. diff is cleared. If health hits zero, the patient dies.
+- **Right panel** (one-third width, stacked top to bottom):
+  - **Treatment Decisions** — buttons to administer interventions
+  - **Time Controls** — buttons to advance the simulation
+  - **Gut Sample — DNA Sequencing** — microbiome sampling panel
+
+**Event Log** — a scrollable log of notable events (antibiotic courses, therapy doses, C. diff episodes, outcomes) as they occur during the simulation.
+
+**Advanced Settings** — collapsible parameter sliders for educators who want to adjust simulation parameters such as antibiotic kill rates and C. diff virulence.
+
 ### Controls
 
+**Treatment Decisions**
 - **Give Antibiotics** — Kills bacteria broadly (commensals and C. diff alike). C. diff spores survive.
-- **Give Microbiome Therapy** — Delivers commensal spores that restore competitive exclusion.
-- **Wait and Monitor** — Advance time without intervention.
-- **+1 Day / +1 Week / Auto-play** — Control the pace of the simulation.
+- **Give Microbiome Therapy** — Delivers a consortium of commensal and therapeutic spores that restore competitive exclusion.
 
-### Charts
+**Time Controls** (below Treatment Decisions)
+- **+1 Day** — Advance the simulation by a single day.
+- **+1 Week** — Advance by seven days at once.
+- **Auto-play** — Run the simulation forward automatically until you stop it or an outcome is reached.
 
-- **Population Dynamics** (top) — Stacked area chart showing commensal bacteria (green) and C. diff (red) competing for the same gut niche (0–100 scale). The gap between their combined total and 100 represents depleted, unoccupied niche space.
-- **Patient Health & Toxin** (bottom) — Health score (purple) and C. diff toxin level (orange, dashed). Toxin trails the C. diff bloom — it builds up as C. diff grows and decays as C. diff is cleared. If health hits zero, the patient dies.
+### Microbiome Sampling and Sequence Generation
+
+The **Gut Sample — DNA Sequencing** panel simulates taking a stool sample and sequencing the 16S rRNA gene to identify which bacteria are present.
+
+**How it works:**
+1. Click **Take Sample** at any point in the simulation.
+2. The simulator draws **10 sequences** from the current gut community, weighted by bacterial abundance — more abundant species appear more often across the 10 sequences.
+3. Each sequence is a real, full-length (~1,400 bp) 16S rRNA sequence from a type strain, sourced from the [RDP (Ribosomal Database Project)](https://rdp.cme.msu.edu/).
+4. After administering microbiome therapy, therapeutic bacteria rapidly dominate subsequent samples, reflecting their bloom in the gut.
+
+**BLAST workflow for students:**
+1. Copy one or more FASTA sequences from the panel (individual "Copy" buttons, or "Copy All").
+2. Go to [NCBI BLAST (blastn)](https://blast.ncbi.nlm.nih.gov/blast/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome).
+3. Paste the sequence and click **BLAST**.
+4. Examine the top hits — what organism does this sequence match?
+5. Use the reference list below to determine whether the species is a host commensal, a microbiome therapeutic bacterium, or *C. diff*.
+
+**Educator note:** A **"Reveal answers (educators only)"** toggle beneath the sequence list shows the identity and category of each sequence in the current sample, for classroom verification.
 
 ### Outcomes
 
 - **Durable Cure** — C. diff stays suppressed and commensals recover. You win.
 - **Patient Death** — Health reached zero from toxin damage. Act faster next time.
-- **Chronic Infection** — The simulation timed out with C. diff still active. Rethink your strategy.
+- **Chronic Infection** — The simulation timed out (200 days) with C. diff still active. Rethink your strategy.
+
+---
+
+## Bacterial species reference
+
+Use this list when interpreting BLAST results. All sequences in the simulation are drawn from the species listed here.
+
+**Host commensal bacteria**
+
+- *Akkermansia muciniphila*
+- *Bacteroides fragilis*
+- *Bifidobacterium longum*
+- *Blautia obeum*
+- *Coprococcus eutactus*
+- *Dorea formicigenerans*
+- *Enterococcus faecalis*
+- *Eubacterium rectale*
+- *Faecalibacterium prausnitzii*
+- *Lactobacillus acidophilus*
+- *Prevotella copri*
+- *Roseburia intestinalis*
+- *Ruminococcus gnavus*
+
+**Microbiome therapeutic bacteria**
+
+- *Blautia hydrogenotrophica*
+- *Clostridium hiranonis*
+- *Clostridium scindens*
+
+**Pathogenic bacteria**
+
+- *Clostridioides difficile*
+
+---
 
 ## Running locally
 
