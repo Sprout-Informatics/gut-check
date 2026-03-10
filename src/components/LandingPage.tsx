@@ -178,7 +178,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           </h2>
           <div className="space-y-6 text-lg leading-relaxed text-slate-600 text-left mb-10">
             <p>
-              <strong className="text-slate-900">Gut Check</strong> is an
+              <strong className="text-slate-900">Spore Wars</strong> is an
               interactive simulation that lets you manage a patient with
               recurrent <em>C. difficile</em> infection over 180 days. You'll
               decide when to prescribe antibiotics, when to administer
@@ -222,7 +222,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       {/* Footer */}
       <footer className="max-w-3xl mx-auto px-6 py-10 text-center text-sm text-slate-400">
         <p>
-          Gut Check is an educational simulation. It is not medical advice.
+          Spore Wars is an educational simulation. It is not medical advice.
           Clinical decisions should always be made with a healthcare provider.
         </p>
       </footer>

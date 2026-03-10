@@ -27,20 +27,7 @@ export default function TreatmentControls() {
           <p className="text-xs text-green-600 mt-1">Delivers commensal spores to restore competitive exclusion.</p>
         </button>
 
-        <button
-          onClick={() => {
-            dispatch({ type: 'PLAYER_ACTION', action: { type: 'WAIT_AND_MONITOR' } })
-            // Also advance a week
-            for (let i = 0; i < 6; i++) {
-              dispatch({ type: 'ADVANCE_ONE_TICK' })
-            }
-          }}
-          disabled={gameOver}
-          className="w-full text-left px-4 py-3 rounded-lg border-2 border-gray-300 bg-gray-50 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-        >
-          <span className="font-semibold text-gray-800">Wait and Monitor (1 week)</span>
-          <p className="text-xs text-gray-600 mt-1">Observe for 7 days without intervention.</p>
-        </button>
+
       </div>
     </div>
   )

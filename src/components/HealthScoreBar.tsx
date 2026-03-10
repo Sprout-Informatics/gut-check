@@ -3,6 +3,7 @@ import { useSimulation } from '../state/SimulationContext'
 export default function HealthScoreBar() {
   const { state } = useSimulation()
   const health = state.simulation.healthScore
+  const day = state.simulation.tick
 
   const color = health > 70 ? 'bg-green-500' : health > 40 ? 'bg-yellow-500' : 'bg-red-500'
   const textColor = health > 70 ? 'text-green-700' : health > 40 ? 'text-yellow-700' : 'text-red-700'
@@ -19,6 +20,7 @@ export default function HealthScoreBar() {
           style={{ width: `${Math.max(0, Math.min(100, health))}%` }}
         />
       </div>
+      <div className="mt-2 text-xs text-gray-500">Day {day}</div>
     </div>
   )
 }
