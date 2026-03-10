@@ -186,17 +186,6 @@ export default function LandingPage({ onStart }: LandingPageProps) {
               decide when to prescribe antibiotics, when to administer
               microbiome therapy, and when to wait.
             </p>
-            <p>
-              You'll watch the gut ecosystem in real time &mdash; commensal
-              bacteria competing with <em>C. difficile</em>, toxin levels
-              rising and falling, patient health hanging in the balance. You'll
-              discover firsthand why the instinct to "just give more
-              antibiotics" is the very thing that fuels the recurrence cycle.
-            </p>
-            <p>
-              And you'll see how restoring the microbiome &mdash; not
-              eliminating the pathogen &mdash; is the key to a durable cure.
-            </p>
           </div>
 
           <button
@@ -229,7 +218,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           VOWST&trade; product in any way. All simulation mechanics are simplified for educational purposes.
         </p>
         <div className="mt-6 flex flex-col items-center gap-2">
-          <img src="/images/sprout_informatics_logo_only.png" alt="Sprout Informatics Logo" className="h-10 w-auto opacity-70" />
+          <img src={`${import.meta.env.BASE_URL}images/sprout_informatics_logo_only.png`} alt="Sprout Informatics Logo" className="h-10 w-auto opacity-70" />
           <p>Developed by Sprout Informatics</p>
         </div>
       </footer>
