@@ -80,7 +80,6 @@ export function tick(state: SimulationState, rng: RNG): SimulationState {
   newState = { ...newState, totalCommensalAbundance, diversityIndex }
 
   // 4. C. diff dynamics
-  const prevVegetative = newState.cdiff.vegetative
   const prevToxin = newState.cdiff.toxinLevel
   const newCdiff = updateCDiff(newState, rng)
   newState = { ...newState, cdiff: newCdiff }
