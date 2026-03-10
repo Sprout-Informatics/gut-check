@@ -9,13 +9,15 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       <header className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-white to-slate-50" />
         <div className="relative max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
-          <p className="text-sm font-semibold tracking-widest uppercase text-teal-600 mb-4">
-            An Interactive Microbiome Simulation
-          </p>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
             <span className="text-slate-900">SPORE</span>{' '}
             <span className="text-teal-700">WARS</span>
           </h1>
+          <img
+            src={`${import.meta.env.BASE_URL}images/spore_wars2.png`}
+            alt="Spore Wars — a Star Wars-themed spore illustration"
+            className="mx-auto my-6 max-w-xs md:max-w-sm w-full rounded-xl shadow-md"
+          />
           <p className="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
             When Bugs Go Bad: How Antibiotics Can Pave the Way for Opportunistic Bacteria and Deadly Infections
           </p>
@@ -220,10 +222,11 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       </section>
 
       {/* Footer */}
-      <footer className="max-w-3xl mx-auto px-6 py-10 text-center text-sm text-slate-400">
+      <footer className="max-w-3xl mx-auto px-6 py-10 text-center text-xs text-slate-400">
         <p>
-          Spore Wars is an educational simulation. It is not medical advice.
-          Clinical decisions should always be made with a healthcare provider.
+          <strong>Disclaimer:</strong> This is an educational exercise only. Spore Wars is not affiliated
+          with Seres Therapeutics and is not related to, endorsed by, or representative of the actual
+          VOWST&trade; product in any way. All simulation mechanics are simplified for educational purposes.
         </p>
       </footer>
     </div>
