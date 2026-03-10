@@ -10,7 +10,7 @@ export default function RecurrenceCounter() {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-4">
       <div className="mb-3">
-        <span className="text-sm font-medium text-gray-600">C. diff Recurrences</span>
+        <span className="text-sm font-medium text-gray-600">C. diff episode counter</span>
         <p className={`text-2xl font-bold ${recurrenceColor}`}>{recurrenceCount}</p>
       </div>
       <div>

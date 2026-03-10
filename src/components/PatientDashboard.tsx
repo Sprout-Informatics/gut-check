@@ -1,14 +1,18 @@
 import PopulationChart from './PopulationChart'
 import HealthScoreBar from './HealthScoreBar'
-import RecurrenceCounter from './RecurrenceCounter'
 import TreatmentControls from './TreatmentControls'
 import TimeControls from './TimeControls'
 import EventLog from './EventLog'
 import GameSummary from './GameSummary'
 import ParameterSliders from './ParameterSliders'
 import SequenceSampler from './SequenceSampler'
+import { useSimulation } from '../state/SimulationContext'
+import { DEFAULTS } from '../simulation/constants'
 
 export default function PatientDashboard() {
+  const { state } = useSimulation()
+  const day = state.simulation.tick
+
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
@@ -21,9 +25,15 @@ export default function PatientDashboard() {
         </div>
 
         {/* Patient Status Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <HealthScoreBar />
-          <RecurrenceCounter />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="md:col-span-2">
+            <HealthScoreBar />
+          </div>
+          <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center">
+            <span className="text-sm font-medium text-gray-600">Day</span>
+            <p className="text-3xl font-bold text-gray-900">{day}</p>
+            <span className="text-xs text-gray-400">/ {DEFAULTS.MAX_SIMULATION_TICKS}</span>
+          </div>
         </div>
 
         {/* Charts and Right Panel */}

@@ -81,6 +81,7 @@ export function tick(state: SimulationState, rng: RNG): SimulationState {
 
   // 4. C. diff dynamics
   const prevVegetative = newState.cdiff.vegetative
+  const prevToxin = newState.cdiff.toxinLevel
   const newCdiff = updateCDiff(newState, rng)
   newState = { ...newState, cdiff: newCdiff }
 
@@ -105,21 +106,24 @@ export function tick(state: SimulationState, rng: RNG): SimulationState {
   }
 
   // 5. Health score
+  const prevHealth = newState.healthScore
   const healthScore = updateHealthScore(newState.healthScore, newState.cdiff.toxinLevel)
   const cumulativeHealth = newState.cumulativeHealth + healthScore
   newState = { ...newState, healthScore, cumulativeHealth }
 
-  // 6. Recurrence check
+  // 6. Episode counter: increments when health drops from green (>70) to orange (40-70)
+  //    and toxin levels are rising
   if (
-    prevVegetative < DEFAULTS.RECURRENCE_THRESHOLD
-    && newState.cdiff.vegetative >= DEFAULTS.RECURRENCE_THRESHOLD
-    && newState.antibioticCoursesGiven > 0
+    prevHealth > 70
+    && healthScore <= 70
+    && healthScore > 40
+    && newState.cdiff.toxinLevel > prevToxin
   ) {
     newState = { ...newState, recurrenceCount: newState.recurrenceCount + 1 }
     newEvents.push({
       tick: newState.tick,
       type: 'critical',
-      message: `C. difficile recurrence detected! (Episode ${newState.recurrenceCount})`,
+      message: `C. difficile episode detected! (Episode ${newState.recurrenceCount})`,
     })
   }
 

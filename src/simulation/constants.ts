@@ -44,7 +44,7 @@ export const DEFAULTS = {
   RECURRENCE_THRESHOLD: 0.3,
 
   // Outcome thresholds
-  MAX_SIMULATION_TICKS: 180,
+  MAX_SIMULATION_TICKS: 200,
 
   // Randomization variance
   GROWTH_RATE_VARIANCE: 0.03,
