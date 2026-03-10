@@ -33,7 +33,12 @@ export const DEFAULTS = {
   // Therapeutic (SER-109/Vowst-like)
   THERAPEUTIC_COMMENSAL_BOOST: 0.65,
   THERAPEUTIC_SPECIES_ADDED: 8,
-  THERAPEUTIC_ENGRAFTMENT_BONUS: 0.12,
+  // Therapeutic spores rapidly colonize open niches and actively displace existing
+  // commensals via competitive exclusion. Existing species retain this fraction of
+  // their abundance immediately after dosing.
+  THERAPEUTIC_COMMENSAL_DISPLACEMENT: 0.3,
+  // Therapeutic species engraft faster than native commensals (higher growth rate)
+  THERAPEUTIC_ENGRAFTMENT_BONUS: 0.25,
 
   // Health score
   HEALTH_BASELINE: 100,

@@ -35,12 +35,20 @@ export function applyNaturalRegrowthTick(state: SimulationState, rng: RNG): Simu
 export function applyTherapeuticIntervention(state: SimulationState, rng: RNG): SimulationState {
   const boostPerSpecies = DEFAULTS.THERAPEUTIC_COMMENSAL_BOOST / DEFAULTS.THERAPEUTIC_SPECIES_ADDED
 
-  // Find depleted commensal species
-  const depleted = state.commensals
+  // Therapeutic spores competitively displace resident commensals as they rapidly
+  // colonize open niches. Existing species are reduced to a fraction of their
+  // current abundance to reflect this colonization pressure.
+  const displaced = state.commensals.map((s) => ({
+    ...s,
+    abundance: s.abundance * DEFAULTS.THERAPEUTIC_COMMENSAL_DISPLACEMENT,
+  }))
+
+  // Find depleted commensal species (post-displacement)
+  const depleted = displaced
     .map((s, i) => ({ species: s, index: i }))
     .filter((s) => s.species.abundance < 0.05)
 
-  const newCommensals = [...state.commensals.map((s) => ({ ...s }))]
+  const newCommensals = [...displaced.map((s) => ({ ...s }))]
   let boosted = 0
 
   // Boost existing depleted species first
