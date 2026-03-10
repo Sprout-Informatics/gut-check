@@ -29,6 +29,12 @@ export default function PatientDashboard() {
           </div>
         </div>
 
+        {/* Patient Status Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <HealthScoreBar />
+          <RecurrenceCounter />
+        </div>
+
         {/* Charts and Right Panel */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="md:col-span-2">
@@ -40,10 +46,8 @@ export default function PatientDashboard() {
           </div>
         </div>
 
-        {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <HealthScoreBar />
-          <RecurrenceCounter />
+        {/* Time Controls */}
+        <div className="mb-6">
           <TimeControls />
         </div>
 
