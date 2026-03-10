@@ -117,9 +117,9 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             <p>
               Antibiotics destroy this ecosystem. They don't just kill{' '}
               <i>C. difficile</i> &mdash; they kill the beneficial bacteria
-              too. And here's the cruel trick:{' '}
+              too. Furthermore, like other types of so-called "spore-forming" bacteria,
               <em>C. difficile</em> produces <strong className="text-slate-900">spores</strong>,
-              dormant survival structures that antibiotics cannot touch.
+              dormant survival structures that are resistant to antibiotics.
             </p>
 
             <div className="my-10 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -150,9 +150,8 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             </div>
 
             <p>
-              Each round of antibiotics deepens the damage. The microbiome
-              becomes more depleted, the window for <em>C. difficile</em> to
-              re-establish grows wider, and the patient enters a vicious cycle
+              Each round of antibiotics wipes out the gut ecosystem, opening a window for 
+              <em>C. difficile</em> to re-establish growth, and the patient enters a vicious cycle
               where the treatment itself perpetuates the disease.
             </p>
           </div>
@@ -172,14 +171,13 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           <p>
             This was the question that drove{' '}
             <a href="https://www.serestherapeutics.com" target="_blank" rel="noopener noreferrer" className="text-teal-700 hover:underline"><strong className="text-teal-700">Seres Therapeutics</strong></a>, a
-            Cambridge, Massachusetts biotech company founded on a deceptively
-            simple insight: the microbiome itself is the medicine. Rather than
+            Cambridge, Massachusetts biotech company. Rather than
             designing a molecule to attack <em>C. difficile</em>, they set out
             to rebuild the bacterial community that naturally suppresses it.
           </p>
           <p>
             Their lead candidate, <strong className="text-slate-900">SER-109</strong>,
-            was a defined consortium of purified bacterial spores derived from
+            consisted of purified bacterial spores derived from
             healthy donor stool. Not a fecal transplant &mdash; a manufactured,
             quality-controlled therapeutic delivered as an oral capsule. The
             idea was radical for the pharmaceutical industry: treating a disease
