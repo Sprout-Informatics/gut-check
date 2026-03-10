@@ -115,7 +115,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
               suppress its growth.
             </p>
             <p>
-              Antibiotics shatter this ecosystem. They don't just kill{' '}
+              Antibiotics destroy this ecosystem. They don't just kill{' '}
               <i>C. difficile</i> &mdash; they kill the beneficial bacteria
               too. And here's the cruel trick:{' '}
               <em>C. difficile</em> produces <strong className="text-slate-900">spores</strong>,
@@ -171,7 +171,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           </p>
           <p>
             This was the question that drove{' '}
-            <strong className="text-slate-900">Seres Therapeutics</strong>, a
+            <a href="https://www.serestherapeutics.com" target="_blank" rel="noopener noreferrer" className="text-teal-700 hover:underline"><strong className="text-teal-700">Seres Therapeutics</strong></a>, a
             Cambridge, Massachusetts biotech company founded on a deceptively
             simple insight: the microbiome itself is the medicine. Rather than
             designing a molecule to attack <em>C. difficile</em>, they set out
