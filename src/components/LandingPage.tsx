@@ -228,6 +228,10 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           with Seres Therapeutics and is not related to, endorsed by, or representative of the actual
           VOWST&trade; product in any way. All simulation mechanics are simplified for educational purposes.
         </p>
+        <div className="mt-6 flex flex-col items-center gap-2">
+          <img src="/images/sprout_informatics_logo_only.png" alt="Sprout Informatics Logo" className="h-10 w-auto opacity-70" />
+          <p>Developed by Sprout Informatics</p>
+        </div>
       </footer>
     </div>
   )
