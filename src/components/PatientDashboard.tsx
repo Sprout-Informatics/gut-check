@@ -29,9 +29,14 @@ export default function PatientDashboard() {
           </div>
         </div>
 
-        {/* Chart */}
-        <div className="mb-6">
-          <PopulationChart />
+        {/* Charts and Gut Sample DNA Sequencing */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="md:col-span-2">
+            <PopulationChart />
+          </div>
+          <div className="md:col-span-1">
+            <SequenceSampler />
+          </div>
         </div>
 
         {/* Stats Row */}
@@ -41,10 +46,9 @@ export default function PatientDashboard() {
           <TimeControls />
         </div>
 
-        {/* Treatment Controls and Sequence Sampler */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        {/* Treatment Controls */}
+        <div className="mb-6">
           <TreatmentControls />
-          <SequenceSampler />
         </div>
 
         {/* Event Log */}
